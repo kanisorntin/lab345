@@ -10,18 +10,18 @@ struct studentNode {
 
 };
 
-void saveNode(struct studentNode *child, char n[], int a, char s, float g) ;
+void saveNode(struct studentNode *child, const char n[], int a, char s, float g) ;
 void goNext1(struct studentNode *walk);
 
 int main() {
     struct studentNode *start, *now1, **now2;
-    start = (struct studentNode*)malloc(sizeof(struct studentNode));
+    start = new struct studentNode;
     saveNode(start, "one", 6, 'M', 3.11);
-    start->next = (struct studentNode*)malloc(sizeof(struct studentNode));
+    start->next = new struct studentNode;
     saveNode(start->next, "two", 8, 'F', 3.22);
-    start->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
+    start->next->next = new struct studentNode;
     saveNode(start->next->next, "three", 10, 'M', 3.33);
-    start->next->next->next = (struct studentNode*)malloc(sizeof(struct studentNode));
+    start->next->next->next = new struct studentNode;
     saveNode(start->next->next->next, "four", 12, 'F', 3.44);
     now1 = start;
     now2 = &start;
@@ -30,7 +30,7 @@ int main() {
     return 0;
     
 }
-void saveNode(struct studentNode *child, char n[], int a, char s, float g){
+void saveNode(struct studentNode *child, const char n[], int a, char s, float g){
     strcpy( child->name, n ) ;
     child->age = a ;
     child->sex = s ;
