@@ -16,76 +16,19 @@ protected:
     studentNode *now;
 
 public:
-    LinkedList() {
-        start = NULL;
-        now = NULL;
-    }
+    LinkedList();
+    ~LinkedList();
 
-    ~LinkedList() {
-        studentNode *temp;
-        while(start != NULL) {
-            temp = start;
-            start = start->next;
-            delete temp;
-        }
-    }
-
-void InsNode(char n[], int a, char s, float g) {
-    studentNode *newNode = new studentNode;
-
-        strcpy(newNode->name, n);
-        newNode->age = a;
-        newNode->sex = s;
-        newNode->gpa = g;
-        newNode->next = NULL;
-
-        if(start == NULL) {
-            start = newNode;
-        } else {
-            studentNode *temp = start;
-            while(temp->next != NULL)
-                temp = temp->next;
-            temp->next = newNode;
-        }
-
-        now = newNode;
-    }
-
-    void DelNode() {
-        if(start == NULL) return;
-
-        if(start == now) {
-            start = start->next;
-            delete now;
-            now = start;
-        }
-    }
-
-    void GoNext() {
-        if(now != NULL && now->next != NULL)
-            now = now->next;
-    }
-
-    virtual void ShowNode() {
-        if(now != NULL) {
-            cout << now->name << " "
-                 << now->age << " "
-                 << now->sex << " "
-                 << now->gpa << endl;
-        }
-    }
+    void InsNode(char n[], int a, char s, float g);
+    void DelNode();
+    void GoNext();
+    virtual void ShowNode();
 };
 
 class NewList : public LinkedList {
 public:
-    void GoFirst() {
-        now = start;
-    }
-
-    virtual void ShowNode() {
-        cout << "NewList -> ";
-        LinkedList::ShowNode();
-    }
+    void GoFirst();
+    virtual void ShowNode();
 };
 
 int main() {
@@ -115,4 +58,74 @@ int main() {
     listC->ShowNode();
 
     return 0;
+}
+LinkedList::LinkedList() {
+    start = NULL;
+    now = NULL;
+}
+
+LinkedList::~LinkedList() {
+    studentNode *temp;
+    while(start != NULL) {
+        temp = start;
+        start = start->next;
+        delete temp;
+    }
+}
+
+void LinkedList::InsNode(char n[], int a, char s, float g) {
+
+    studentNode *newNode = new studentNode;
+
+    strcpy(newNode->name, n);
+    newNode->age = a;
+    newNode->sex = s;
+    newNode->gpa = g;
+    newNode->next = NULL;
+
+    if(start == NULL) {
+        start = newNode;
+    }
+    else {
+        studentNode *temp = start;
+        while(temp->next != NULL)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+
+    now = newNode;
+}
+
+void LinkedList::DelNode() {
+
+    if(start == NULL) return;
+
+    if(start == now) {
+        start = start->next;
+        delete now;
+        now = start;
+    }
+}
+
+void LinkedList::GoNext() {
+    if(now != NULL && now->next != NULL)
+        now = now->next;
+}
+
+void LinkedList::ShowNode() {
+    if(now != NULL) {
+        cout << now->name << " "
+             << now->age << " "
+             << now->sex << " "
+             << now->gpa << endl;
+    }
+}
+
+void NewList::GoFirst() {
+    now = start;
+}
+
+void NewList::ShowNode() {
+    cout << "NewList -> ";
+    LinkedList::ShowNode();
 }
