@@ -1,16 +1,34 @@
 #include <stdio.h>
 
-void go(int **p, int *z);
+int BinSearch(int data[], int n, int find);
 
 int main() {
-    int *a, b = 10, c = 20;
-    go( &a, &b );
-    printf("%d %p %p", *a, a, &a);
-    go( &a, &c);
-    printf("%d %p %p", *a, a, &a );
+    int data[6] = { 1, 2, 3, 4, 5, 7 };
+    int n = 6, find = 5;
+    int pos = BinSearch(data, n, find);
+    
+    if (pos != -1)
+        printf("Found %d at index %d\n", find, pos);
+    else
+        printf("%d not found\n", find);
+        
     return 0;
 }
-void go(int **p, int *z){
-    *p = z;
-    printf("%d %p %p\n", **p , *p ,p);
+
+int BinSearch(int data[], int n, int find) {
+    int left = 0;
+    int right = n - 1;
+    
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        
+        if (data[mid] == find)
+            return mid;
+        else if (data[mid] < find)
+            left = mid + 1;
+        else
+            right = mid - 1; 
+    }
+    
+    return -1;
 }
