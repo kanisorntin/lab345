@@ -1,34 +1,34 @@
 #include <stdio.h>
 
-int BinSearch(int data[], int n, int find);
-
+void merge(int *u, int m, int *v, int n, int *t) ;
+void mergesort(int t[], int k) ;
 int main() {
-    int data[6] = { 1, 2, 3, 4, 5, 7 };
-    int n = 6, find = 5;
-    int pos = BinSearch(data, n, find);
-    
-    if (pos != -1)
-        printf("Found %d at index %d\n", find, pos);
-    else
-        printf("%d not found\n", find);
-        
+    int data[7] = { 4, 6, 1, 2, 5, 1, 8 };
+    int n = 7;
+    mergesort(data, n);
+    for (int i = 0; i < n; i++) printf("%d ", data[i]);
     return 0;
 }
-
-int BinSearch(int data[], int n, int find) {
-    int left = 0;
-    int right = n - 1;
-    
-    while (left <= right) {
-        int mid = (left + right) / 2;
-        
-        if (data[mid] == find)
-            return mid;
-        else if (data[mid] < find)
-            left = mid + 1;
+void merge(int *u, int m, int *v, int n, int *t) {
+    int i = 0, j = 0, k = 0;
+    while (i < m && j < n) {
+        if (u[i] <= v[j])
+            t[k++] = u[i++];
         else
-            right = mid - 1; 
+            t[k++] = v[j++];
     }
-    
-    return -1;
+    while (i < m) t[k++] = u[i++];
+    while (j < n) t[k++] = v[j++];
+}
+
+void mergesort(int t[], int k) {
+    if (k < 2) return;
+    int m = k / 2;
+    int n = k - m;
+    int u[m], v[n];
+    for (int i = 0; i < m; i++) u[i] = t[i];
+    for (int i = 0; i < n; i++) v[i] = t[m + i];
+    mergesort(u, m);
+    mergesort(v, n);
+    merge(u, m, v, n, t);
 }
